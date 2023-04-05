@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "test_release",
-    "version": "0.0.0"
+    "productName": "Hanzi Tools",
+    "version": "../package.json"
   },
   "tauri": {
     "allowlist": {
