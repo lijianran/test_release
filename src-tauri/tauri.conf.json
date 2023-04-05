@@ -19,6 +19,13 @@
       }
     },
     "bundle": {
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
       "active": true,
       "icon": [
         "icons/32x32.png",
