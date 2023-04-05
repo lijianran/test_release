@@ -1,102 +1,3 @@
-# name: Release
-
-# permissions:
-#   contents: write
-
-# on:
-#   push:
-#     tags:
-#       - "v*"
-#   workflow_dispatch:
-
-# jobs:
-#   release-log:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v3
-#         with:
-#           fetch-depth: 0
-#       - name: Set output
-#         id: vars
-#         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
-#       - name: Setup node
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 16.x
-
-#       - name: Generate changelog
-#         id: create_release
-#         run: npx changelogithub --draft --name HanziTools-${{ steps.vars.outputs.tag }}
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-
-#   release:
-#     needs: release-log
-
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         # platform: [macos-latest, ubuntu-20.04, windows-latest]
-#         platform: [macos-latest, macOS11]
-
-#     runs-on: ${{ matrix.platform }}
-
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v3
-
-#       # - uses: pnpm/action-setup@v2
-#       #   with:
-#       #     version: latest
-#       - name: Node Setup
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 16
-#           # node-version: "lts/*"
-#           # cache: "yarn"
-
-#       - name: Install dependencies (ubuntu only)
-#         if: matrix.platform == 'ubuntu-20.04'
-#         run: |
-#           sudo apt-get update
-#           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev
-
-#       - name: Install dependencies (mac only)
-#         if: matrix.platform == 'macos-latest'
-#         run: |
-#           rustup target add aarch64-apple-darwin
-
-#       - name: Rust setup
-#         uses: dtolnay/rust-toolchain@stable
-
-#       - name: Rust cache
-#         uses: swatinem/rust-cache@v2
-#         with:
-#           workspaces: "./src-tauri -> target"
-
-#       - name: Sync node version and setup cache
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: "16"
-#           cache: "npm"
-
-#       - name: Install frontend dependencies
-#         run: npm install
-
-#       - name: Build the app
-#         uses: tauri-apps/tauri-action@v0
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-#           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-#           TAURI_KEY_PASSWORD: ""
-#         with:
-#           tagName: ${{ github.ref_name }}
-#           releaseName: "Test App v__VERSION__"
-#           releaseBody: "input release log"
-#           releaseDraft: true
-#           prerelease: false
-
 name: Release
 
 permissions:
@@ -135,7 +36,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest]
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
 
     runs-on: ${{ matrix.platform }}
 
@@ -155,7 +56,7 @@ jobs:
       - name: install dependencies (mac only)
         if: matrix.platform == 'macos-latest'
         run: |
-          rustup target add stable-aarch64-apple-darwin
+          rustup target add aarch64-apple-darwin
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
