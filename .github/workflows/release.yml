@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-release:
+  release-log:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,10 +25,10 @@ jobs:
         id: create_release
         run: npx changelogithub --draft --name ChatGPT-Desktop-${{ steps.vars.outputs.tag }}
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release:
-    needs: create-release
+    needs: release-log
     permissions:
       contents: write
     strategy:
