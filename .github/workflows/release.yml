@@ -46,6 +46,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Sync node version and setup cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+
       - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
         run: |
@@ -65,12 +71,6 @@ jobs:
         with:
           workspaces: "./src-tauri -> target"
 
-      - name: Sync node version and setup cache
-        uses: actions/setup-node@v3
-        with:
-          node-version: "lts/*"
-          cache: "yarn"
-
       - name: Install frontend dependencies
         run: yarn install
 
@@ -80,7 +80,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: "Test Release App v__VERSION__" # tauri-action replaces \_\_VERSION\_\_ with the app version.
+          releaseName: "Test App v__VERSION__"
           releaseBody: "input release log"
           releaseDraft: true
           prerelease: false
