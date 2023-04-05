@@ -12,20 +12,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Set output
-        id: vars
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
 
-      - name: Generate changelog
-        id: create_release
-        run: npx changelogithub --draft --name ChatGPT-Desktop-${{ steps.vars.outputs.tag }}
+      - run: npx changelogithub # or changelogithub@0.12 if ensure the stable result
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   release:
     needs: release-log
