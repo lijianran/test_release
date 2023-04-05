@@ -19,7 +19,7 @@ jobs:
 
       - run: npx changelogithub # or changelogithub@0.12 if ensure the stable result
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.RELEASE_TOKEN}}
 
   release:
     needs: release-log
@@ -64,7 +64,7 @@ jobs:
         uses: tauri-apps/tauri-action@dev
 
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           tagName: ${{ github.ref_name }} # This only works if your workflow triggers on new tags.
           releaseName: 'Test Release App v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
