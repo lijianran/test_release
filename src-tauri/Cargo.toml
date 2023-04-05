@@ -1,10 +1,10 @@
 [package]
-name = "test_release"
-version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+name = "chatgpt-desktop"
+version = "1.0.1"
+description = "ChatGPT-Desktop"
+authors = ["orangelckc", "bilibili-ayang"]
+license = "MIT"
+repository = "https://github.com/Synaptrix/ChatGPT-Desktop"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -13,9 +13,18 @@ edition = "2021"
 tauri-build = { version = "1.2", features = [] }
 
 [dependencies]
-tauri = { version = "1.2", features = ["shell-open"] }
+tauri = { version = "1.2", features = ["api-all", "macos-private-api", "system-tray", "updater"] }
+tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "dev" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+window-shadows = "0.2.1"
+tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "dev" }
+
+
+[dependencies.tauri-plugin-sql]
+git = "https://github.com/tauri-apps/plugins-workspace"
+branch = "dev"
+features = ["sqlite"]
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

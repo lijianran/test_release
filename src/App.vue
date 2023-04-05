@@ -1,52 +1,41 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Greet from "./components/Greet.vue";
+const { isFix } = storeToRefs(useSettingsStore())
+
+const { windowClass } = useInit()
+
+const handleDoubleClick = () => {
+  isFix.value = !isFix.value
+}
 </script>
 
 <template>
-  <div class="container">
-    <h1>Welcome to Tauri!</h1>
+  <div
+    class="frosted flex h-screen flex-col overflow-hidden p-2"
+    :class="[windowClass]"
+  >
+    <a-tooltip :content="isFix ? '双击取消固定' : '双击固定窗口'">
+      <div
+        class="z-999 transition-300 fixed top-2 left-1/2 h-3 w-80 -translate-x-1/2 cursor-move rounded-md opacity-0 hover:opacity-100"
+        :class="isFix ? 'bg-gray' : 'bg-gray/50'"
+        data-tauri-drag-region
+        @dblclick="handleDoubleClick"
+      ></div>
+    </a-tooltip>
 
-    <div class="row">
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo vite" alt="Vite logo" />
-      </a>
-      <a href="https://tauri.app" target="_blank">
-        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-      </a>
+    <!-- 会话信息 -->
+    <Session />
+
+    <div class="flex cursor-default flex-col gap-2 pt-2">
+      <!-- 功能区域 -->
+      <Function />
+      <!-- 输入框 -->
+      <Input />
     </div>
 
-    <p>Click on the Tauri, Vite, and Vue logos to learn more.</p>
+    <!-- 设置界面 -->
+    <Settings />
 
-    <p>
-      Recommended IDE setup:
-      <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
-      +
-      <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-      +
-      <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank"
-        >Tauri</a
-      >
-      +
-      <a href="https://github.com/rust-lang/rust-analyzer" target="_blank"
-        >rust-analyzer</a
-      >
-    </p>
-
-    <Greet />
+    <!-- 更新 -->
+    <Update />
   </div>
 </template>
-
-<style scoped>
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #249b73);
-}
-</style>

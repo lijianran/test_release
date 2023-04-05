@@ -6,6 +6,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+package-lock.json*
+yarn.lock*
+auto-import.d.ts
+components.d.ts
+stats.html
 
 node_modules
 dist
