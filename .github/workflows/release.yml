@@ -46,11 +46,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Sync node version and setup cache
+      - name: Node Setup
         uses: actions/setup-node@v3
         with:
-          node-version: "lts/*"
-          cache: "yarn"
+          node-version: 16
+          # node-version: "lts/*"
+          # cache: "yarn"
 
       - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
