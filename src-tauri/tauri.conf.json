@@ -7,18 +7,32 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "Hanzi Tools",
+    "productName": "HanziTools",
     "version": "../package.json"
   },
   "tauri": {
     "allowlist": {
-      "all": false,
+      "all": true,
       "shell": {
         "all": false,
         "open": true
+      },
+      "http": {
+        "request": true,
+        "scope": [
+          "https://**",
+          "http://**"
+        ]
       }
     },
     "bundle": {
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
       "active": true,
       "icon": [
         "icons/32x32.png",
@@ -34,7 +48,15 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "endpoints": [
+        "https://github.com/lijianran/test_release/releases/download/updater/update.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      },
+      "dialog": false,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYzOTdCQzlGRjZFNzNGQzUKUldURlArZjJuN3lYWTQ1Z0hxVmIxazNlQnIrdWxCd1RVcjljZ2VHZHF0SzZjSUFxN1VjYWpMN04K"
     },
     "windows": [
       {
