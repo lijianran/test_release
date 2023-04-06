@@ -1,7 +1,7 @@
 {
   "build": {
     "beforeDevCommand": "yarn dev",
-    "beforeBuildCommand": "npm run build",
+    "beforeBuildCommand": "yarn build",
     "devPath": "http://localhost:1420",
     "distDir": "../dist",
     "withGlobalTauri": false
@@ -41,7 +41,15 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "endpoints": [
+        "https://releases.myapp.com/{{target}}/{{arch}}/{{current_version}}"
+      ],
+      "windows": {
+        "installMode": "passive"
+      },
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYzOTdCQzlGRjZFNzNGQzUKUldURlArZjJuN3lYWTQ1Z0hxVmIxazNlQnIrdWxCd1RVcjljZ2VHZHF0SzZjSUFxN1VjYWpMN04K"
     },
     "windows": [
       {
