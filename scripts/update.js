@@ -17,11 +17,11 @@ const updateData = {
     name: '',
     pub_date: new Date().toISOString(),
     platforms: {
-        win64: { signature: '', url: '' },
-        linux: { signature: '', url: '' },
-        darwin: { signature: '', url: '' },
-        'linux-x86_64': { signature: '', url: '' },
-        'windows-x86_64': { signature: '', url: '' }
+        // win64: { signature: '', url: '' },
+        // linux: { signature: '', url: '' },
+        "darwin-aarch64": { signature: '', url: '' },
+        // 'linux-x86_64': { signature: '', url: '' },
+        // 'windows-x86_64': { signature: '', url: '' }
     }
 };
 
@@ -33,7 +33,7 @@ console.log('options', options);
 
 const { data: release } = await octokit.rest.repos.getLatestRelease(options);
 updateData.name = release.tag_name;
-console.log('release', release);
+// console.log('release', release);
 
 // eslint-disable-next-line camelcase
 for (const { name, browser_download_url } of release.assets) {
@@ -49,11 +49,12 @@ for (const { name, browser_download_url } of release.assets) {
         updateData.platforms['windows-x86_64'].signature = signature;
     } else if (name.endsWith('.app.tar.gz')) {
         // eslint-disable-next-line camelcase
-        updateData.platforms.darwin.url = browser_download_url;
+        updateData.platforms["darwin-aarch64"].url = browser_download_url;
     } else if (name.endsWith('.app.tar.gz.sig')) {
         // eslint-disable-next-line no-await-in-loop
+        console.log("start download signature");
         const signature = await getSignature(browser_download_url);
-        updateData.platforms.darwin.signature = signature;
+        updateData.platforms["darwin-aarch64"].signature = signature;
     } else if (name.endsWith('.AppImage.tar.gz')) {
         // eslint-disable-next-line camelcase
         updateData.platforms.linux.url = browser_download_url;

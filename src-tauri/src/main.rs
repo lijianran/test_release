@@ -1,6 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use tauri::Manager;
+
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -9,6 +11,21 @@ fn greet(name: &str) -> String {
 
 fn main() {
     tauri::Builder::default()
+        .setup(|_app| {
+            // #[cfg(target_os = "macos")]
+            // _app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+
+            #[cfg(target_os = "windows")]
+            set_shadow(&_app.get_window("main").unwrap(), true).expect("Unsupported platform!");
+
+            #[cfg(debug_assertions)] // only include this code on debug builds
+            {
+                let window = _app.get_window("main").unwrap();
+                window.open_devtools();
+            }
+
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
