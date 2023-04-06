@@ -16,6 +16,13 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "http": {
+        "request": true,
+        "scope": [
+          "https://**",
+          "http://**"
+        ]
       }
     },
     "bundle": {
@@ -43,7 +50,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-        "https://releases.myapp.com/{{target}}/{{arch}}/{{current_version}}"
+        "https://github.com/lijianran/test_release/releases/download/updater/update.json"
       ],
       "windows": {
         "installMode": "passive"
